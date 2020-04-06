@@ -1,0 +1,24 @@
+FROM python:3.8.2-alpine
+LABEL maintainer="MF Tech"
+
+ENV PYTHONUNBUFFERED 1
+
+# creates a directory on the docker image
+RUN mkdir /api
+COPY ./api/requirements.txt /api/requirements.txt
+
+# sets the directory as root
+WORKDIR /api
+# copies the local api directory to the docker image
+COPY ./api /api
+
+# install depencies without caching them to keep the container as clean as possible
+RUN apk add --update --no-cache postgresql-client
+RUN apk add --update --no-cache --virtual .temp-build-deps \
+      gcc libc-dev linux-headers postgresql-dev
+RUN pip install -r /api/requirements.txt
+RUN apk del .temp-build-deps
+
+# creates a user who can only runs stuff on the docker image
+RUN adduser -D user
+USER user
