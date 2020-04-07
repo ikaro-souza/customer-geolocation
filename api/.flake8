@@ -1,0 +1,8 @@
+[flake8]
+exclude =
+    migrations,
+    __pycache__,
+    manage.py,
+    settings.py
+    ./customer_geolocation_api/asgi.py
+    ./customer_geolocation_api/wsgi.py
