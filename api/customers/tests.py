@@ -1,6 +1,11 @@
 from django.test import TestCase
+from django.urls import reverse
+from rest_framework.test import APIClient
 
 from .models import Customer
+
+
+CUSTOMER_LIST_URL = reverse('customers:customer-list')
 
 
 def create_customer(
@@ -24,19 +29,19 @@ def create_customer(
 
 
 class CustomerTests(TestCase):
+    """
+    Tests the customers api endpoints
+    """
 
-    def test_gender_names_showed_properly(self):
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_fetching_customers_list(self):
         """
-        Tests if the gender names are being displayed correctly
+        Tests if customer list is being properly fetched
         """
 
-        m_customer = create_customer(1)
-        f_customer = create_customer(
-            2,
-            email='test2@user',
-            last_name='test',
-            gender='female'
-        )
+        response = self.client.get(CUSTOMER_LIST_URL)
+        db_customers = Customer.objects.all()[:51]
 
-        self.assertEqual(m_customer.gender.lower(), 'male')
-        self.assertEqual(f_customer.gender.lower(), 'female')
+        self.assertEqual(len(response.data['results']), len(db_customers))

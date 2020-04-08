@@ -11,6 +11,8 @@ class Command(BaseCommand):
     """Django command to pause execution until database is available"""
 
     def handle(self, *args, **options):
+        sys.stdout.write("\nPopulating database...\n")
+
         try:
             with open('./customers.csv') as file:
                 reader = csv.DictReader(file)
@@ -30,4 +32,4 @@ class Command(BaseCommand):
             raise error
             sys.exit(1)
 
-        self.stdout.write(self.style.SUCCESS('Connected to database.'))
+        sys.stdout.write("\nDatabase populated\n")
