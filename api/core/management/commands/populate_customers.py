@@ -12,7 +12,7 @@ class Command(BaseCommand):
     Command that populates the customer table"""
 
     def handle(self, *args, **options):
-        sys.stdout.write("\nPopulating database...\n")
+        sys.stdout.write("Populating customers table...\n")
 
         try:
             with open('./customers.csv') as file:
@@ -33,4 +33,4 @@ class Command(BaseCommand):
             raise error
             sys.exit(1)
 
-        sys.stdout.write("\nDatabase populated\n")
+        sys.stdout.write("Populated customers table\n")
