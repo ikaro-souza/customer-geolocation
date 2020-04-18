@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
 
     'core',
-    'customers'
+    'customers',
+    'geolocation'
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,5 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20
 }
+
+GMAPS_API_KEY = 'AIzaSyDwj9w3TNzBz3qMqiAce7WLCbcbO113pCw'
