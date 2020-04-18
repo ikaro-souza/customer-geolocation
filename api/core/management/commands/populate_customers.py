@@ -9,7 +9,8 @@ import sys
 
 class Command(BaseCommand):
     """
-    Command that populates the customer table"""
+    Command that populates the Customers table
+    """
 
     def handle(self, *args, **options):
         sys.stdout.write("Populating customers table...\n")
