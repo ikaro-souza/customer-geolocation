@@ -28,4 +28,4 @@ class CommandTests(TestCase):
         call_command('populate_locations')
         db_locations_count = Location.objects.all().count()
 
-        self.assertEqual(db_locations_count, 60)
+        self.assertEqual(db_locations_count, 1000)

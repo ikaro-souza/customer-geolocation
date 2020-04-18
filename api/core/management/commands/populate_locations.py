@@ -8,35 +8,12 @@ from geolocation.models import Location
 from geocoder import mapquest as GeoCoder
 
 import csv
-import json
-from json import JSONDecodeError
 import sys
 import time
-from typing import List, Tuple
 
 
 # API_KEY = 'AuvobGc265ZsvyqomT_TqrkOMn2OxkRiuAXeZBtGk3aUpSkiIHkk_SY54MvjXRiW'
 API_KEY = 'cT9PCC4Qgd1t4zImBVRxIFYAokntlDGH'
-
-
-def serialize_locations(cities: List[str], geocodes: Tuple[float, float]):
-    """
-    Saves locations (city with latitude and longitude) locally
-    """
-
-    locations = [(cities[i], geocodes[i]) for i in range(len(cities))]
-
-    with open('./locations.json', 'w+') as f:
-        try:
-            f_locations = json.load(f)
-        except JSONDecodeError:
-            f_locations = []
-
-        for location in locations:
-            if location not in f_locations:
-                f_locations.append(location)
-
-        json.dump(f_locations, f)
 
 
 class Command(BaseCommand):
@@ -54,7 +31,7 @@ class Command(BaseCommand):
 
         try:
             call_command('populate_customers')
-            customers = Customer.objects.filter(pk__lt=61)
+            customers = Customer.objects.all()
             i = 0
 
             for c in customers:
@@ -79,7 +56,7 @@ class Command(BaseCommand):
         """
         with open('./customers.csv') as file:
             reader = csv.DictReader(file)
-            return [c['city'] for c in reader][:60]
+            return [c['city'] for c in reader]
 
     def get_geocodes(self):
         """
@@ -87,7 +64,7 @@ class Command(BaseCommand):
         """
 
         TOTAL = len(self.cities)
-        PARTS = 6
+        PARTS = 10
         PART_SIZE = int(TOTAL / PARTS)
 
         fetched = 0
@@ -109,7 +86,7 @@ class Command(BaseCommand):
                 tries = 0
                 fetched += 1
 
-                time.sleep(0.1)
+                time.sleep(1)
 
             except Exception as error:
                 tries += 1
@@ -121,6 +98,5 @@ class Command(BaseCommand):
                     sys.stderr.write(
                         f'Some error happened, trying again in 1 second...\n'
                     )
-                    
-        serialize_locations(self.cities, geocodes)
+
         return geocodes

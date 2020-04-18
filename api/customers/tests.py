@@ -43,11 +43,11 @@ class CustomerTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.client = APIClient()
-        call_command('populate_db')
+        call_command('populate_customers')
 
     def test_fetching_customers_list(self):
         """
-        Tests if customer list endpoint is receiving the proper data
+        Tests if customer list endpoint returns the correct data
         """
 
         response = self.client.get(CUSTOMERS_URL)
@@ -57,7 +57,7 @@ class CustomerTests(TestCase):
 
     def test_fetching_customer_details(self):
         """
-        Tests if the customer details endpoint is receiving the proper data
+        Tests if the customer details endpoint returns the correct data
         """
 
         response = self.client.get(get_customer_details_url(1))

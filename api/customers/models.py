@@ -4,7 +4,7 @@ from django.db import models
 class Customer(models.Model):
 
     class Meta:
-        ordering = ['-id']
+        ordering = ['id']
 
     class Gender(models.TextChoices):
         MALE = 'male',
