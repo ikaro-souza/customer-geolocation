@@ -8,7 +8,8 @@ import sys
 
 
 class Command(BaseCommand):
-    """Django command to pause execution until database is available"""
+    """
+    Command that populates the customer table"""
 
     def handle(self, *args, **options):
         sys.stdout.write("\nPopulating database...\n")

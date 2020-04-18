@@ -9,11 +9,11 @@ class CommandTests(TestCase):
 
     def test_populate_db(self):
         """
-        Tests if the populate_db correctly loads the csv file data
-        into the database
+        Tests if the populate_customers command is populating
+        the Customers table
         """
 
-        call_command('populate_db')
+        call_command('populate_customers')
         db_customers_count = Customer.objects.all().count()
 
         self.assertEqual(db_customers_count, 1000)
