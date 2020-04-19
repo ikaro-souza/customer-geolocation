@@ -1,0 +1,17 @@
+FROM node:12.16.2-alpine
+LABEL maintainer="MF Tech"
+
+RUN mkdir /app/
+RUN mkdir /app/web/
+WORKDIR /app/web/
+
+COPY package.json ./package.json
+RUN npm install --silent
+RUN npm install react-scripts@3.4.1 -g --silent
+ENV PATH /app/web/node_modules/.bin:$PATH
+
+COPY . ./
+
+EXPOSE 3000
+
+CMD "npm start"
