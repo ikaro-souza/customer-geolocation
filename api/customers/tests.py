@@ -43,7 +43,7 @@ class CustomerTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.client = APIClient()
-        call_command('populate_customers')
+        call_command('populate_db')
 
     def test_fetching_customers_list(self):
         """
