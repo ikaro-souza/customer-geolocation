@@ -9,7 +9,10 @@ import { EXAMPLE_CUSTOMER } from "../../constants";
 const getNotFoundResult = (customerId) => {
   const resultModel = new RequestResultModel(resultStatus.NOT_FOUND);
   resultModel.fields = [
-    new ResultBodyField("message", `No customer with id ${customerId} was found`),
+    new ResultBodyField(
+      "message",
+      `No customer with id ${customerId} was found`
+    ),
   ];
 
   return resultModel;
@@ -17,10 +20,7 @@ const getNotFoundResult = (customerId) => {
 
 const getSuccessResult = (customerModel) => {
   const resultModel = new RequestResultModel(resultStatus.OK);
-  resultModel.fields = [
-    new ResultBodyField("customer", customerModel || EXAMPLE_CUSTOMER),
-  ];
-
+  resultModel.fields = [new ResultBodyField("customer", customerModel)];
   return resultModel;
 };
 

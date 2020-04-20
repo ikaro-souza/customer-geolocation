@@ -10,4 +10,5 @@ export const EXAMPLE_CUSTOMER = new CustomerModel(
   "A Not So Cool Company",
   "Salesperson"
 );
-export const API_ENDPOINT = "api/customers/";
+export const CUSTOMERS_API_ENDPOINT = "api/customers/";
+export const LOCATION_API_ENDPOINT = "api/location/customer/";

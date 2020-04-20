@@ -20,7 +20,7 @@ const Navbar = () => {
   const styles = useStyles({ theme });
 
   return (
-    <Container as={"nav"} fluid className={[styles.nav, styles.mb3]}>
+    <Container as={"nav"} fluid className={[styles.nav, styles.mb3].join(" ")}>
       <Container>
         <Header>CGEO</Header>
       </Container>

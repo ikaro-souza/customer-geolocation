@@ -1,11 +1,15 @@
 import * as TYPE from "./actionTypes";
 
-export const updateCustomerListRequest = (count, customerList, currentPage) => ({
-  type: TYPE.CUSTOMER_LIST_FETCH,
+export const updateCustomerListRequest = (
+  count,
+  customerList,
+  currentPage
+) => ({
+  type: TYPE.UPDATE_CUSTOMER_LIST_REQUEST,
   payload: { count, customerList, currentPage },
 });
 
 export const updateCustomerRequest = (customer) => ({
-  type: TYPE.SINGLE_CUSTOMER_FETCH,
+  type: TYPE.UPDATE_CUSTOMER_REQUEST,
   payload: { customer },
 });

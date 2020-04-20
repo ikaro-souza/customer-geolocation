@@ -7,6 +7,7 @@ import { requestTypes } from "../../models/requests/RequestModel";
 
 import RequestDetails from "../../components/RequestDetails";
 import CustomerList from "../../components/customers/CustomerList";
+import Customer from "../../components/customers/Customer";
 
 const HomePage = () => {
   const theme = useTheme();
@@ -20,7 +21,12 @@ const HomePage = () => {
           <CustomerList />
         </Item>
       </section>
-      <RequestDetails requestType={requestTypes.CUSTOMER} />
+      <section className={styles.mb4}>
+        <RequestDetails requestType={requestTypes.CUSTOMER} />
+        <Item>
+          <Customer />
+        </Item>
+      </section>
     </Container>
   );
 };

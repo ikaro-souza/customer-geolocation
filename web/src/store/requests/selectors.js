@@ -14,5 +14,3 @@ export const getRequestModels = (state) => [
     model: getCustomerRequestModel(state),
   },
 ];
-
-export const getCurrentPage = (state) => state.currentPage;

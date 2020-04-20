@@ -1,12 +1,18 @@
 import axios from "axios";
 
+import store from "../store";
 import * as TYPE from "./actionTypes";
-import { API_ENDPOINT, PAGE_SIZE } from "../../constants";
-import customerModelFromObject from "../../models/mappers";
+import {
+  CUSTOMERS_API_ENDPOINT,
+  LOCATION_API_ENDPOINT,
+  PAGE_SIZE,
+} from "../../constants";
 import {
   updateCustomerListRequest,
   updateCustomerRequest,
 } from "../requests/actions";
+import { customerModelFromObject } from "../../models/mappers";
+import { getCustomer } from "./selectors";
 
 export const fetchCustomers = (page = 1) => {
   return (dispatch) => {
@@ -40,9 +46,10 @@ export const fetchCustomer = (id) => {
     dispatch({ type: TYPE.FETCH_CUSTOMER });
 
     axios
-      .get(API_ENDPOINT)
+      .get(CUSTOMERS_API_ENDPOINT + id)
       .then((response) => {
         const customer = customerModelFromObject(response.data);
+
         dispatch({
           type: TYPE.FETCH_CUSTOMER_SUCCESS,
           payload: { customer },
@@ -52,5 +59,31 @@ export const fetchCustomer = (id) => {
       .catch((error) => {
         dispatch({ type: TYPE.FETCH_CUSTOMER_FAIL, payload: { error } });
       });
+  };
+};
+
+export const fetchCustomerLocation = (customerId) => {
+  const state = store.getState();
+  const customerModel = getCustomer(state);
+
+  return (dispatch) => {
+    const url = LOCATION_API_ENDPOINT + customerId;
+    axios
+      .get(url)
+      .then((response) => {
+        customerModel.setLocation(response.data);
+
+        dispatch({
+          type: TYPE.FETCH_CUSTOMER_LOCATION_SUCCESS,
+          payload: { customer: customerModel },
+        });
+        dispatch(updateCustomerRequest(customerModel));
+      })
+      .catch((error) =>
+        dispatch({
+          type: TYPE.FETCH_CUSTOMER_LOCATION_FAIL,
+          payload: { error },
+        })
+      );
   };
 };

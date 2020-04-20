@@ -78,6 +78,24 @@ function customersReducer(state = initialState, action) {
         },
       };
 
+    case TYPE.FETCH_CUSTOMER_LOCATION_SUCCESS:
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          model: payload.customer,
+        },
+      };
+
+    case TYPE.FETCH_CUSTOMER_LOCATION_FAIL:
+      return {
+        ...state,
+        customer: {
+          ...state.customer,
+          error: payload.error,
+        },
+      };
+
     default:
       return state;
   }

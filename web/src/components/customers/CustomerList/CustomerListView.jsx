@@ -3,6 +3,7 @@ import { Container, Loader, Pagination, Table } from "semantic-ui-react";
 
 import CustomerItemView from "../CustomerItem/CustomerItemView";
 import CustomerModel from "../../../models/CustomerModel";
+import { omitCustomerLocation } from "../../../models/requests/CustomerListRequestModel";
 
 const CustomerListView = ({
   customerList,
@@ -12,10 +13,10 @@ const CustomerListView = ({
   onPageChangeHandler,
 }) => {
   return (
-    <Table celled compact={"very"} selectable size={"small"} >
+    <Table celled compact={"very"} selectable size={"small"}>
       <Table.Header>
         <Table.Row>
-          {Object.getOwnPropertyNames(new CustomerModel())
+          {Object.getOwnPropertyNames(omitCustomerLocation(new CustomerModel()))
             .slice(1)
             .map((property, index) => (
               <Table.HeaderCell key={index}>{property}</Table.HeaderCell>
@@ -44,7 +45,8 @@ const CustomerListView = ({
               <Pagination
                 totalPages={totalPages}
                 activePage={currentPage}
-                boundaryRange={3}
+                boundaryRange={2}
+                siblingRange={2}
                 onPageChange={onPageChangeHandler}
               />
             </Container>

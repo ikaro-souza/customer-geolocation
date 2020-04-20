@@ -1,6 +1,6 @@
 import CustomerModel from "./CustomerModel";
 
-export default function CustomerModelFromObject({
+export function customerModelFromObject({
   id,
   first_name,
   last_name,
@@ -8,6 +8,7 @@ export default function CustomerModelFromObject({
   email,
   company,
   title,
+  location,
 }) {
   return new CustomerModel(
     id,
@@ -16,6 +17,7 @@ export default function CustomerModelFromObject({
     gender,
     email,
     company,
-    title
+    title,
+    location
   );
 }

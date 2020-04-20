@@ -12,7 +12,7 @@ function requestsReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
-    case TYPE.CUSTOMER_LIST_FETCH:
+    case TYPE.UPDATE_CUSTOMER_LIST_REQUEST:
       return {
         ...state,
         customerList: new CustomerListRequestModel(
@@ -21,6 +21,12 @@ function requestsReducer(state = initialState, action) {
           payload.customerList
         ),
         currentPage: payload.currentPage,
+      };
+
+    case TYPE.UPDATE_CUSTOMER_REQUEST:
+      return {
+        ...state,
+        customer: new CustomerRequestModel(payload.customer),
       };
 
     default:

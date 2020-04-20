@@ -1,5 +1,8 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Table } from "semantic-ui-react";
+
+import CustomerModel from "../../../models/CustomerModel";
 
 const CustomerItemView = ({
   customer: { firstName, lastName, gender, email, company, title },
@@ -14,6 +17,10 @@ const CustomerItemView = ({
       <Table.Cell>{title}</Table.Cell>
     </Table.Row>
   );
+};
+
+CustomerItemView.propTypes = {
+  customer: PropTypes.objectOf(CustomerModel).isRequired,
 };
 
 export default CustomerItemView;

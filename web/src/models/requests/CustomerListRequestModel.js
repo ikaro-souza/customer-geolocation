@@ -4,26 +4,39 @@ import RequestResultModel, {
   resultStatus,
   SERVER_ERROR_RESULT,
 } from "./RequestResultModel";
-import {EXAMPLE_CUSTOMER, PAGE_SIZE} from "../../constants";
+import {
+  CUSTOMERS_API_ENDPOINT,
+  EXAMPLE_CUSTOMER,
+  PAGE_SIZE,
+} from "../../constants";
 
-const apiEndpoint = process.env.REACT_APP_CUSTOMERS_API_ENDPOINT;
+const apiEndpoint = CUSTOMERS_API_ENDPOINT;
+
+export const omitCustomerLocation = (customer) => {
+  const { location, ...rest } = customer;
+  return rest;
+};
 
 const getSuccessResultModel = (currentPage, count, customerList) => {
+  const customers =
+    count > 0
+      ? customerList.map((c) => omitCustomerLocation(c))
+      : [EXAMPLE_CUSTOMER].map((c) => omitCustomerLocation(c));
+
   const successResult = new RequestResultModel(resultStatus.OK);
   successResult.fields = [
     new ResultBodyField("count", count),
     new ResultBodyField(
       "next",
-      currentPage === (count / PAGE_SIZE) ? null : apiEndpoint + `?page=${currentPage + 1}`
+      currentPage === count / PAGE_SIZE
+        ? null
+        : apiEndpoint + `?page=${currentPage + 1}`
     ),
     new ResultBodyField(
       "previous",
       currentPage === 1 ? null : apiEndpoint + `?page=${currentPage - 1}`
     ),
-    new ResultBodyField(
-      "results",
-      count > 0 ? customerList : [EXAMPLE_CUSTOMER]
-    ),
+    new ResultBodyField("results", customers),
   ];
   return successResult;
 };
