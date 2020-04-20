@@ -5,10 +5,11 @@ import { Table } from "semantic-ui-react";
 import CustomerModel from "../../../models/CustomerModel";
 
 const CustomerItemView = ({
-  customer: { firstName, lastName, gender, email, company, title },
+  customer: { id, firstName, lastName, gender, email, company, title },
+  onClickHandler,
 }) => {
   return (
-    <Table.Row>
+    <Table.Row onClick={() => onClickHandler(id)}>
       <Table.Cell>{firstName}</Table.Cell>
       <Table.Cell>{lastName}</Table.Cell>
       <Table.Cell>{gender}</Table.Cell>
@@ -21,6 +22,7 @@ const CustomerItemView = ({
 
 CustomerItemView.propTypes = {
   customer: PropTypes.objectOf(CustomerModel).isRequired,
+  onClickHandler: PropTypes.func.isRequired,
 };
 
 export default CustomerItemView;

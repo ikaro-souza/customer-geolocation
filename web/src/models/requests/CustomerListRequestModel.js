@@ -56,7 +56,7 @@ export default class CustomerListRequestModel extends RequestModel {
 
     super(
       Methods.GET,
-      process.env.REACT_APP_CUSTOMERS_API_ENDPOINT + `?page=${currentPage}`,
+      apiEndpoint + `?page=${currentPage}`,
       "Customer List",
       "Returns a list of customer without the locations.",
       [pageParameter],
