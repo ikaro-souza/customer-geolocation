@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.core.management import call_command
+from unittest.mock import patch
 
 from customers.models import Customer
 from geolocation.models import Location
@@ -20,3 +21,15 @@ class CommandTests(TestCase):
 
         self.assertEqual(db_customers_count, 1000)
         self.assertEqual(db_locations_count, 1000)
+
+    @patch('time.sleep', return_value=True)
+    def test_wait_for_db(self, ts):
+        """
+        Tests if the api is waiting for the db to be ready
+        """
+
+        with patch('django.db.utils.ConnectionHandler.__getitem__') as gi:
+            gi.return_value = True
+            call_command('wait_for_db')
+
+            self.assertTrue(gi.call_count <= 5)
