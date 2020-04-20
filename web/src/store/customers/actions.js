@@ -71,13 +71,15 @@ export const fetchCustomerLocation = (customerId) => {
     axios
       .get(url)
       .then((response) => {
-        customerModel.setLocation(response.data);
+        const customerData = Object.assign({}, customerModel);
+        customerData.location = response.data;
+        const newCustomerModel = customerModelFromObject(customerData);
 
         dispatch({
           type: TYPE.FETCH_CUSTOMER_LOCATION_SUCCESS,
-          payload: { customer: customerModel },
+          payload: { customer: newCustomerModel },
         });
-        dispatch(updateCustomerRequest(customerModel));
+        dispatch(updateCustomerRequest(newCustomerModel));
       })
       .catch((error) =>
         dispatch({

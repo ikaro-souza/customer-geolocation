@@ -16,10 +16,18 @@ export class RequestParameter {
 }
 
 export default class RequestModel {
-  constructor(method, endpoint, name, parameters = [], results = []) {
+  constructor(
+    method,
+    endpoint,
+    name,
+    description,
+    parameters = [],
+    results = []
+  ) {
     this.method = method;
     this.endpoint = endpoint || "-";
     this.name = name || "";
+    this.description = description;
     this.parameters = parameters;
     this.results = results;
   }

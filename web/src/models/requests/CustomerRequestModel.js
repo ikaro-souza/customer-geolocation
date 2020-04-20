@@ -4,7 +4,7 @@ import RequestResultModel, {
   resultStatus,
   SERVER_ERROR_RESULT,
 } from "./RequestResultModel";
-import { EXAMPLE_CUSTOMER } from "../../constants";
+import { EXAMPLE_CUSTOMER, LOCATION_API_ENDPOINT } from "../../constants";
 
 const getNotFoundResult = (customerId) => {
   const resultModel = new RequestResultModel(resultStatus.NOT_FOUND);
@@ -36,8 +36,9 @@ export default class CustomerRequestModel extends RequestModel {
 
     super(
       Methods.GET,
-      process.env.REACT_APP_CUSTOMERS_API_ENDPOINT,
+      LOCATION_API_ENDPOINT,
       "Customer",
+      "Returns the data of a customer, including its location.",
       [customerIdParameter],
       [successResult, notFoundResult, SERVER_ERROR_RESULT]
     );

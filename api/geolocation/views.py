@@ -20,23 +20,23 @@ class LocationView(RetrieveAPIView):
         return location
 
     def retrieve(self, request, *args, **kwargs):
+        customerId = self.kwargs['pk']
         try:
-            location = self.get_object(self.kwargs['pk'])
+            location = self.get_object(customerId)
         except Location.DoesNotExist as e:
             return Response(
                 data={'message': e.message}, status=status.HTTP_404_NOT_FOUND
             )
 
         if location.latitude == 0 and location.longitude == 0:
-            location = self.update_location_gecode(location)
+            location = self.update_location_geocode(customerId)
 
         data = LocationSerializer(location).data
         return Response(data=data, status=status.HTTP_200_OK)
 
-    def update_location_gecode(self, location: Location):
-        (lat, long) = get_city_geocode(location.city)
-        location.latitude = lat
-        location.longitude = long
-        location.save()
+    def update_location_geocode(self, customerId):
+        location = Location.objects.filter(customer=customerId)
+        (lat, long) = get_city_geocode(location.first().city)
+        location.update(latitude=lat, longitude=long)
 
-        return location
+        return Location.objects.get(customer=customerId)

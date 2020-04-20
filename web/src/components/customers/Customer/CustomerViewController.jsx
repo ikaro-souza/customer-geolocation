@@ -17,7 +17,13 @@ const CustomerViewController = ({
     if (!ranFetch) fetchCustomer(customerId);
     else if (ranFetch && customer.firstName !== EXAMPLE_CUSTOMER.firstName)
       fetchCustomerLocation(customerId);
-  }, [customerId, ranFetch, fetchCustomer]);
+  }, [
+    customerId,
+    ranFetch,
+    fetchCustomer,
+    customer.firstName,
+    fetchCustomerLocation,
+  ]);
 
   return <CustomerView customer={customer} loading={loading} />;
 };

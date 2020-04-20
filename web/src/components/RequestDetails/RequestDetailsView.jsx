@@ -22,8 +22,7 @@ const RequestDetailsView = ({ requestModel }) => {
   return (
     <Item className={styles.mb4}>
       <Item.Content>
-
-        <Item.Header className={styles.mb3}>
+        <Item.Header className={styles.mb2}>
           <Header as={"h2"} className={styles.mb2}>
             <Label size={"medium"} color={"olive"} horizontal>
               {requestModel.method}
@@ -33,8 +32,12 @@ const RequestDetailsView = ({ requestModel }) => {
           <Label size={"small"}>{requestModel.endpoint}</Label>
         </Item.Header>
 
-        <Item.Meta className={styles.mb3}>
-          <Header as={"h3"} className={styles.mb2}>Parameters:</Header>
+        <Item.Meta className={styles.mb3}>{requestModel.description}</Item.Meta>
+
+        <Item.Description className={styles.mb3}>
+          <Header as={"h3"} className={styles.mb2}>
+            Parameters:
+          </Header>
           <Table definition collapsing compact size={"small"} celled>
             <Table.Header>
               <Table.Row>
@@ -53,15 +56,17 @@ const RequestDetailsView = ({ requestModel }) => {
               ))}
             </Table.Body>
           </Table>
-        </Item.Meta>
+        </Item.Description>
 
-        <Item.Meta className={styles.mb3}>
-          <Header as={"h3"} className={styles.mb2}>Results:</Header>
+        <Item.Description className={styles.mb3}>
+          <Header as={"h3"} className={styles.mb2}>
+            Results:
+          </Header>
 
           {requestModel.results.map((result, index) => (
             <RequestResultView resultModel={result} key={index} />
           ))}
-        </Item.Meta>
+        </Item.Description>
       </Item.Content>
     </Item>
   );
